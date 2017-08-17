@@ -113,9 +113,9 @@ Jordan Eldrege (@captbaritone)</textarea>
     'use strict';
     
     var f;
-    var textarea = document.getElementById("t");
-    var shareUrl = document.getElementById("shareUrl");
-    var shareUrl2 = document.getElementById("shareUrl2");
+    var textarea = document.getElementById('t');
+    var shareUrl = document.getElementById('shareUrl');
+    var shareUrl2 = document.getElementById('shareUrl2');
     var download = document.getElementById('download');
     var timeoutNumber = document.getElementById('timeout-number');
 
@@ -134,7 +134,6 @@ Jordan Eldrege (@captbaritone)</textarea>
     var processingContent = false;
 
     var worker = new Worker('worker.js');
-    var rootUrl = document.location.protocol + '//' + document.location.host;
 
     processContent(); // Update hash
 
@@ -145,7 +144,7 @@ Jordan Eldrege (@captbaritone)</textarea>
     }
 
     function hash() {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
 
         worker.onmessage = function(e) {
           resolve(e.data);
@@ -166,7 +165,7 @@ Jordan Eldrege (@captbaritone)</textarea>
     }
 
     function downloadUri() {
-      return "data:text/plain," + encodeURIComponent(textarea.value);
+      return 'data:text/plain,' + encodeURIComponent(textarea.value);
     }
 
     function contentChanged() {
@@ -211,14 +210,14 @@ Jordan Eldrege (@captbaritone)</textarea>
       prepareShare().then(() => {
         shareUrl.value = window.location;
 
-        shareUrl.style.display = "block";
+        shareUrl.style.display = 'block';
         shareUrl.select();
       });
       return false;
     }
 
     function unshare() {
-      shareUrl.style.display = "none";
+      shareUrl.style.display = 'none';
     }
 
     function clear() {

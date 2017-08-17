@@ -1,50 +1,50 @@
 <html>
 <head>
-	<title>HashBin</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="favicon.ico" rel="icon" type="image/x-icon" />
-	<style>
-		body, textarea, input, #tools {
-			background-color: #002b36;
-			color: #93a1a1;
-			font: 14px/20px monospace;
-			padding: 0;
-			margin: 0;
-		}
-		body:before {
-			position: fixed;
-			content: '>';
-			z-index: 1000;
-			text-align: center;
-			margin-top: 60px;
-			width: 30px;
-			color: #586e75;
-		}
-		#t {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			overflow: auto;
-			outline: none;
-			border: none;
-			box-sizing: border-box;
-			padding: 60px 30px 30px 30px;
-		}
-		a {
-			text-decoration: none;
-			color: #268bd2;
-		}
-		#tools {
-			text-align: center;
-			padding: 20px;
-			z-index: 1000;
-			width: 100%;
-			position: fixed;
-			top: 0;
-			box-sizing: border-box;
-		}
+  <title>HashBin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="favicon.ico" rel="icon" type="image/x-icon" />
+  <style>
+    body, textarea, input, #tools {
+      background-color: #002b36;
+      color: #93a1a1;
+      font: 14px/20px monospace;
+      padding: 0;
+      margin: 0;
+    }
+    body:before {
+      position: fixed;
+      content: '>';
+      z-index: 1000;
+      text-align: center;
+      margin-top: 60px;
+      width: 30px;
+      color: #586e75;
+    }
+    #t {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      outline: none;
+      border: none;
+      box-sizing: border-box;
+      padding: 60px 30px 30px 30px;
+    }
+    a {
+      text-decoration: none;
+      color: #268bd2;
+    }
+    #tools {
+      text-align: center;
+      padding: 20px;
+      z-index: 1000;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      box-sizing: border-box;
+    }
     #shareUrl {
       display: none;
       margin-top: 5px;
@@ -61,43 +61,43 @@
       padding: 5px;
       border-radius: 3px;
     }
-		/* Light color theme */
-		body, textarea, input, #tools {
-			background-color: #fdf6e3;
-			color: #586e75;
-		}
-		body:before {
-			color: #93a1a1;
-		}
-		@media (min-width: 600px) {
-			#tools {
-				padding: 10px 20px 0 0;
-				right: 0;
-				width: auto;
-				background: none;
-			}
-			body:before {
-				margin-top: 30px;
-				width: 50px;
-			}
-			#t {
-				padding: 30px 50px 30px 50px;
-			}
-		}
-	</style>
+    /* Light color theme */
+    body, textarea, input, #tools {
+      background-color: #fdf6e3;
+      color: #586e75;
+    }
+    body:before {
+      color: #93a1a1;
+    }
+    @media (min-width: 600px) {
+      #tools {
+        padding: 10px 20px 0 0;
+        right: 0;
+        width: auto;
+        background: none;
+      }
+      body:before {
+        margin-top: 30px;
+        width: 50px;
+      }
+      #t {
+        padding: 30px 50px 30px 50px;
+      }
+    }
+  </style>
 </head>
 <body>
-	<div id='tools'>
+  <div id='tools'>
     <span id='timeout-number'>500ms</span> |
-		<a href='#' id='share'>Share</a> |
-		<a href='#' id='new'>New</a> |
-		<a href='#' id='download' download='hashbin-download.txt'>Download</a> |
-		<a href='https://github.com/captbaritone/hashb.in' target='_blank'>?</a>
+    <a href='#' id='share'>Share</a> |
+    <a href='#' id='new'>New</a> |
+    <a href='#' id='download' download='hashbin-download.txt'>Download</a> |
+    <a href='https://github.com/captbaritone/hashb.in' target='_blank'>?</a>
 
     <input id='shareUrl'>
     <input id='shareUrl2'>
-	</div>
-	<textarea spellcheck="false" id="t">HashBin is a paste bin that never sees the contents of its pastes.
+  </div>
+  <textarea spellcheck="false" id="t">HashBin is a paste bin that never sees the contents of its pastes.
 I posit, that it should be immune to takedown notices.
 
 - Click "New" to create your own paste
@@ -109,24 +109,24 @@ Jordan Eldrege (@captbaritone)</textarea>
 
   <script src="js/lz-string.min.js"></script>
   <!-- <script src="js/catiline.js"></script> -->
-	<script>
+  <script>
     'use strict';
     
-		var f;
-		var textarea = document.getElementById("t");
+    var f;
+    var textarea = document.getElementById("t");
     var shareUrl = document.getElementById("shareUrl");
     var shareUrl2 = document.getElementById("shareUrl2");
-		var download = document.getElementById('download');
+    var download = document.getElementById('download');
     var timeoutNumber = document.getElementById('timeout-number');
 
     var timeout = 500;
 
     {
       var hashPart = window.location.hash.substring(1);
-  	 	var content = LZString.decompressFromBase64();
-  		if(content) {
-  			textarea.value = content;
-  		}
+      var content = LZString.decompressFromBase64();
+      if(content) {
+        textarea.value = content;
+      }
     }
 
     var noop = ()=>{};
@@ -136,15 +136,15 @@ Jordan Eldrege (@captbaritone)</textarea>
     var worker = new Worker('worker.js');
     var rootUrl = document.location.protocol + '//' + document.location.host;
 
-		processContent(); // Update hash
+    processContent(); // Update hash
 
-		async function processContent() {
-			window.location.hash = await hash();
-			document.title = title();
-			download.setAttribute('download', filename());
-		}
+    async function processContent() {
+      window.location.hash = await hash();
+      document.title = title();
+      download.setAttribute('download', filename());
+    }
 
-		function hash() {
+    function hash() {
       return new Promise((resolve, reject) => {
 
         worker.onmessage = function(e) {
@@ -155,23 +155,23 @@ Jordan Eldrege (@captbaritone)</textarea>
         worker.postMessage(textarea.value);
 
       });
-		}
+    }
 
-		function title() {
-			return textarea.value ? textarea.value.slice(0,30) : 'HashBin';
-		}
+    function title() {
+      return textarea.value ? textarea.value.slice(0,30) : 'HashBin';
+    }
 
-		function filename() {
-			return title().replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.txt';
-		}
+    function filename() {
+      return title().replace(/[^a-z0-9]/gi, '_').toLowerCase() + '.txt';
+    }
 
-		function downloadUri() {
-			return "data:text/plain," + encodeURIComponent(textarea.value);
-		}
+    function downloadUri() {
+      return "data:text/plain," + encodeURIComponent(textarea.value);
+    }
 
-		function contentChanged() {
-			clearTimeout(f);
-			f = setTimeout(() => {
+    function contentChanged() {
+      clearTimeout(f);
+      f = setTimeout(() => {
         if (processingContent) {
           worker.terminate();
           timeout += 500;
@@ -183,11 +183,11 @@ Jordan Eldrege (@captbaritone)</textarea>
         worker.onmessage = noop;
         processingContent = true;
 
-				processContent().then(() => {
+        processContent().then(() => {
           processingContent = false;
         });
-			}, 500);
-		}
+      }, 500);
+    }
 
     function prepareShare() { // make sure processContent is fresh
       if (!processingContent) {
@@ -207,27 +207,27 @@ Jordan Eldrege (@captbaritone)</textarea>
       });
     }
 
-		function share() {
+    function share() {
       prepareShare().then(() => {
         shareUrl.value = window.location;
 
         shareUrl.style.display = "block";
         shareUrl.select();
       });
-			return false;
-		}
+      return false;
+    }
 
-		function unshare() {
-			shareUrl.style.display = "none";
-		}
+    function unshare() {
+      shareUrl.style.display = "none";
+    }
 
-		function clear() {
-			textarea.value = '';
-			unshare();
-			textarea.focus();
-			processContent();
-			return false;
-		}
+    function clear() {
+      textarea.value = '';
+      unshare();
+      textarea.focus();
+      processContent();
+      return false;
+    }
 
     download.onmouseover = () => {
       download.href = downloadUri();
@@ -235,11 +235,11 @@ Jordan Eldrege (@captbaritone)</textarea>
     download.onmouseout = () => {
       download.href = 'URL does not appear here';
     };
-		textarea.onkeyup = contentChanged;
-		textarea.onpaste = contentChanged;
-		textarea.onfocus = unshare;
-		document.getElementById('share').onclick = share;
-		document.getElementById('new').onclick = clear;
-	</script>
+    textarea.onkeyup = contentChanged;
+    textarea.onpaste = contentChanged;
+    textarea.onfocus = unshare;
+    document.getElementById('share').onclick = share;
+    document.getElementById('new').onclick = clear;
+  </script>
 </body>
 </html>
